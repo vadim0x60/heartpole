@@ -5,7 +5,7 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 def heart_attack_risk(hypertension):
-    return sigmoid(hypertension - 3)
+    return sigmoid(hypertension - 6)
 
 def heart_attack_occured(state):
     return np.random.uniform(0, 1) < heart_attack_risk(state['hypertension'])
@@ -96,6 +96,10 @@ class HeartPole(gym.Env):
                              'time_since_slept', 'time_elapsed', 'work_done']
         self.action_space = gym.spaces.Discrete(len(self.actions))
         self.observation_space = make_heartpole_obs_space(self.observations)
+        self.log = ''
+
+    def observation(self):
+        return np.array([self.state[o] for o in self.observations])
         
     def reset(self):
         self.state = {
@@ -108,6 +112,7 @@ class HeartPole(gym.Env):
         }
         
         wakeup(self.state)
+        return self.observation()
         
     def step(self, action):
         if self.state['time_elapsed'] == 0:
@@ -117,6 +122,7 @@ class HeartPole(gym.Env):
         
         # Do selected action
         self.actions[action](self.state)
+        self.log += f'Chosen action: {self.actions[action].__name__}\n'
         
         # Do work
         work(self.state)
@@ -127,11 +133,15 @@ class HeartPole(gym.Env):
         
         if heart_attack_occured(self.state):
             # We would like to avoid this
+            self.log += 'HEART_ATTACK\n'
             reward -= 100
-        return np.array([self.state[o] for o in self.observations]), reward, False, {}
+
+        self.log += str(self.state) + '\n'
+        return self.observation(), reward, False, {}
     
     def close(self):
         pass
         
-    def render(self):
-        print(self.state)
+    def render(self, mode=None):
+        print(self.log)
+        self.log = ''
