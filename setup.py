@@ -9,7 +9,7 @@ setup(
   author = 'Vadim Liventsev',                   
   author_email = 'v.liventsev@tue.nl',      
   url = 'https://github.com/vadim0x60/heartpole',   
-  download_url = 'https://github.com/vadim0x60/heartpole/archive/v_01.tar.gz',    
+  download_url = 'https://github.com/vadim0x60/heartpole/archive/v_10.tar.gz',    
   keywords = ['Machine Learning', 'Reinforcement Learning', 'Healthcare'],   
   install_requires=[            
           'numpy',
