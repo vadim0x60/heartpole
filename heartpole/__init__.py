@@ -4,11 +4,11 @@ import gym
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-def heart_attack_risk(hypertension):
-    return sigmoid(hypertension - 6)
+def heart_attack_risk(hypertension, heart_attack_proclivity=0.5):
+    return heart_attack_proclivity * sigmoid(hypertension - 6)
 
-def heart_attack_occured(state):
-    return np.random.uniform(0, 1) < heart_attack_risk(state['hypertension'])
+def heart_attack_occured(state, heart_attack_proclivity=0.5):
+    return np.random.uniform(0, 1) < heart_attack_risk(state['hypertension'], heart_attack_proclivity)
 
 def alertness_decay(time_since_slept):
     return sigmoid((time_since_slept - 40) / 10)
@@ -90,12 +90,13 @@ def make_heartpole_obs_space(observations):
     return gym.spaces.Box(low,high,shape)
 
 class HeartPole(gym.Env):
-    def __init__(self):
+    def __init__(self, heart_attack_proclivity=0.5):
         self.actions = [do_nothing, drink_coffee, drink_beer, sleep]
         self.observations = ['alertness', 'hypertension', 'intoxication',
                              'time_since_slept', 'time_elapsed', 'work_done']
         self.action_space = gym.spaces.Discrete(len(self.actions))
         self.observation_space = make_heartpole_obs_space(self.observations)
+        self.heart_attack_proclivity = heart_attack_proclivity
         self.log = ''
 
     def observation(self):
@@ -131,10 +132,14 @@ class HeartPole(gym.Env):
         
         reward = new_score - old_score
         
-        if heart_attack_occured(self.state):
+        if heart_attack_occured(self.state, self.heart_attack_proclivity):
             # We would like to avoid this
             self.log += 'HEART_ATTACK\n'
             reward -= 100
+
+            # A heart attack is like purgatory - painful, but cleansing
+            # You can tell I am not a doctor
+            self.state['hypertension'] = 0
 
         self.log += str(self.state) + '\n'
         return self.observation(), reward, False, {}
