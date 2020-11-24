@@ -4,7 +4,7 @@
 
 *HeartPole* is a simple OpenAI gym for benchmarking Reinforcement Learning algorithms. Think CartPole for healthcare. It is meant as a first test for reinforcement learning techniques aimed at the Healthcare domain, before moving on to actual clinical data like [MIMIC III](https://mimic.physionet.org) 
 
-This project also includes a [tutorial on creating your own OpenAI gym environment](HeartPole.ipynb), using HeartPole as an example
+This project includes a [tutorial on creating your own OpenAI gym environment](HeartPole.ipynb), using HeartPole as an example, as well as a [writeup of experimental results](HeartPole_abstract.pdf), submitted to HEALTHINF conference. 
 
 ## The What
 
