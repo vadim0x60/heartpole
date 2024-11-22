@@ -5,7 +5,7 @@ setup(
   packages = ['heartpole'],   
   version = '1.1',      
   license='MIT',        
-  description = 'A simple Healthcare-themed OpenAI gym for benchmarking Reinforcement Learning algorithms',   
+  description = 'A simple Healthcare-themed Gymnasium for benchmarking Reinforcement Learning algorithms',   
   author = 'Vadim Liventsev',                   
   author_email = 'v.liventsev@tue.nl',      
   url = 'https://github.com/vadim0x60/heartpole',   

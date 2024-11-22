@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "heartpole"
+version = "1.2"
+description = "A simple Healthcare-themed Gymnasium for benchmarking Reinforcement Learning algorithms"
+authors = ["Vadim Liventsev <dev@vadim.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+gymnasium = "^0.29"
+numpy = "^1.24"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

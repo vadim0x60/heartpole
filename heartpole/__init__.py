@@ -1,5 +1,5 @@
 import numpy as np
-import gym
+import gymnasium as gym
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -113,7 +113,9 @@ class HeartPole(gym.Env):
         }
         
         wakeup(self.state)
-        return self.observation()
+
+        # return observation, additional info
+        return self.observation(), {}
         
     def step(self, action):
         if self.state['time_elapsed'] == 0:
@@ -142,7 +144,8 @@ class HeartPole(gym.Env):
             self.state['hypertension'] = 0
 
         self.log += str(self.state) + '\n'
-        return self.observation(), reward, False, {}
+        # return observation, reward, terminated, truncated, additional info
+        return self.observation(), reward, False, False, {}
     
     def close(self):
         pass
